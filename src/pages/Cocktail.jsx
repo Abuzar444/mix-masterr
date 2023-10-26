@@ -1,9 +1,9 @@
-import { useLoaderData, Link, Navigate } from 'react-router-dom';
+import { useLoaderData, Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/CocktailPage';
+import { useQuery } from '@tanstack/react-query';
 const singleCocktailUrl =
   'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
-import { useQuery } from '@tanstack/react-query';
 
 const singleCocktailQuery = (id) => {
   return {
@@ -17,14 +17,15 @@ const singleCocktailQuery = (id) => {
 
 export const loader =
   (queryClient) =>
-  async ({ params }) => {
-    const { id } = params;
-    await queryClient.ensureQueryData(singleCocktailQuery(id));
-    return { id };
-  };
+    async ({ params }) => {
+      const { id } = params;
+      await queryClient.ensureQueryData(singleCocktailQuery(id));
+      return { id };
+    };
 
 const Cocktail = () => {
   const { id } = useLoaderData();
+  const navigate = useNavigate()
 
   const { data } = useQuery(singleCocktailQuery(id));
   if (!data) return <Navigate to='/' />;
@@ -49,9 +50,7 @@ const Cocktail = () => {
   return (
     <Wrapper>
       <header>
-        <Link to='/' className='btn'>
-          back home
-        </Link>
+        <button onClick={() => navigate(-1)} className='btn'>Go Back</button>
         <h3>{name}</h3>
       </header>
       <div className='drink'>

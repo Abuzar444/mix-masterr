@@ -1,5 +1,6 @@
 import { Outlet, useNavigation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import SearchForm from '../components/SearchForm';
 
 const HomeLayout = () => {
   const navigation = useNavigation();

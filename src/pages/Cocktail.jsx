@@ -25,6 +25,7 @@ export const loader =
 
 const Cocktail = () => {
   const { id } = useLoaderData();
+  // extra useNavigate hook from react-router-dom
   const navigate = useNavigate()
 
   const { data } = useQuery(singleCocktailQuery(id));
@@ -50,6 +51,7 @@ const Cocktail = () => {
   return (
     <Wrapper>
       <header>
+        {/* replaced Link with simple button */}
         <button onClick={() => navigate(-1)} className='btn'>Go Back</button>
         <h3>{name}</h3>
       </header>
